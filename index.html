@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babe Maman - Simulasi Kredit</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  </head>
+
+  
+  <body>
+    <div class="wrapper">
+      <div class="fluid-container">
+        <img src="img/logo.jpg" id="fluid" class="fluid-1">
+      </div>
+      <form id="form" class="container m-4 pl-4" method="POST">
+        
+        <h1></h1>
+        <h1></h1>
+        <h1>Data Nasabah</h1>
+        <div class="input-box">
+          <div class="input-field">
+            <input
+              class="input"
+              type="text"
+              placeholder="Nama Lengkap"
+              name="Nama Lengkap"
+              required
+            />
+            <i class='bx bxs-user'></i>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <div class="input-field">
+            <input
+              class="input"
+              type="text"
+              placeholder="Instansi"
+              name="Instansi"
+              required
+            />
+            <i class='bx bxs-buildings'></i>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <div class="input-field">
+            <input
+              class="input"
+              type="text"
+              placeholder="Nomor Handphone"
+              name="Nomor Handphone"
+              required
+            />
+            <i class='bx bxs-phone'></i>
+          </div>
+        </div>
+      
+        <div class="input-box">
+          <div class="input-field">
+            <input
+              class="input"
+              type="date"
+              placeholder="Tanggal Lahir Anda"
+              name="Tanggal Lahir"
+              required
+            />
+            <i class='bx bxs-calendar'></i>
+          </div>
+        </div>
+
+        <div class="input-box">
+          <div class="input-field">
+            <input
+              class="input"
+              type="text"
+              placeholder="Gaji Bersih"
+              name="Gaji"
+              id="rupiah"
+              required
+            />
+            <i class='bx bxs-coin-stack'></i>
+          </div>
+        </div>
+
+        <h1></h1>
+        <h1>Data Pinjaman</h1>
+
+        <div class="input-box2">
+          <div class="input-currency">
+            <input
+              class="input"
+              type="text"
+              placeholder="Jumlah Plafond"
+              name="Plafond Pinjaman"
+              id="rupiah2"
+              required
+            />
+            <i class='bx bxs-coin-stack'></i>
+          </div>
+
+          <div class="input-jw">
+            <input
+              class="input"
+              type="number"
+              placeholder="Jangka Waktu"
+              name="Jangka Waktu"
+              required
+            />
+            <i class='bx bxs-time'></i>
+          </div>
+        </div>
+
+        <div class="radio-group">
+          <label class="radio">
+            <input type="radio" name="Status Pinjaman" value="Baru" /> Baru
+            <span></span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="Status Pinjaman" value="Top-Up" /> Top-Up
+            <span></span>
+          </label>
+        </div>
+
+        <div class="input-box">
+          <div class="input-field">
+            <textarea
+              class="textarea"
+              placeholder="Silahkan Tulis Apabila Ada Pesan Tambahan"
+              name="Pesan Tambahan"
+            ></textarea>
+          </div>
+        </div>
+
+        <button class="button" type="submit" id="submit-button">
+            Proses
+        </button>
+      </form>
+    <div>
+      
+    <div
+      id="message"
+      style="
+        display: none;
+        margin: 20px;
+        font-weight: bold;
+        color: blue;
+        padding: 8px;
+        background-color: beige;
+        border-radius: 4px;
+        border-color: aquamarine;
+      ">
+    </div>
+
+    <script>
+      document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        document.getElementById("message").textContent = "Sedang Diproses..";
+        document.getElementById("message").style.display = "block";
+        document.getElementById("submit-button").disabled = true;
+
+        // Collect the form data
+        var formData = new FormData(this);
+        var keyValuePairs = [];
+        for (var pair of formData.entries()) {
+          keyValuePairs.push(pair[0] + "=" + pair[1]);
+        }
+
+        var formDataString = keyValuePairs.join("&");
+
+        // Send a POST request to your Google Apps Script
+        fetch(
+          "https://script.google.com/macros/s/AKfycbxmAgS3qAa-Tk8vwd4u7a6H2u1gAZKE1bFVxQbCbMQh2NdxBC6n_a2F9MwEyceBslI/exec",
+          {
+            redirect: "follow",
+            method: "POST",
+            body: formDataString,
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+          }
+        )
+          .then(function (response) {
+            // Check if the request was successful
+            if (response) {
+              return response; // Assuming your script returns JSON response
+            } else {
+              throw new Error("Proses Penginputan Gagal, Silahkan Ulangi.");
+            }
+          })
+          .then(function (data) {
+            // Display a success message
+            document.getElementById("message").textContent =
+              "Proses Berhasil!";
+            document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.backgroundColor = "blue";
+            document.getElementById("message").style.color = "beige";
+            document.getElementById("submit-button").disabled = false;
+            document.getElementById("form").reset();
+
+            setTimeout(function () {
+              document.getElementById("message").textContent = "";
+              document.getElementById("message").style.display = "none";
+            }, 2600);
+          })
+          .catch(function (error) {
+            // Handle errors, you can display an error message here
+            console.error(error);
+            document.getElementById("message").textContent =
+              "An error occurred while submitting the form.";
+            document.getElementById("message").style.display = "block";
+          });
+      });
+    </script>
+
+    <!-- currency ---------------------------------------------------------------------------->
+    <script type="text/javascript">
+      var rupiah =document.getElementById('rupiah');
+      rupiah.addEventListener('keyup', function(e){
+          rupiah.value = formatRupiah(this.value, 'Rp. ');
+      });
+      function formatRupiah(angka, prefix){
+          var number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split             = number_string.split(','),
+          sisa              = split[0].length % 3,
+          rupiah            = split[0].substr(0, sisa),
+          ribuan            = split[0].substr(sisa).match(/\d{3}/gi);
+
+          if(ribuan){
+              separator = sisa ? '.' :'';
+              rupiah    += separator + ribuan.join('.');
+          }
+
+          rupiah = split[1] !=undefined ? rupiah + ',' + split[1] :rupiah;
+          return prefix == undefined ? rupiah :(rupiah ? 'Rp ' + rupiah :'');}
+  </script>
+
+  <script type="text/javascript">
+      var rupiah2 =document.getElementById('rupiah2');
+      rupiah2.addEventListener('keyup', function(e){
+          rupiah2.value = formatRupiah2(this.value, 'Rp. ');
+      });
+      function formatRupiah2(angka, prefix){
+          var number_string = angka.replace(/[^,\d]/g, '').toString(),
+          split             = number_string.split(','),
+          sisa              = split[0].length % 3,
+          rupiah2            = split[0].substr(0, sisa),
+          ribuan            = split[0].substr(sisa).match(/\d{3}/gi);
+
+          if(ribuan){
+              separator = sisa ? '.' :'';
+              rupiah2    += separator + ribuan.join('.');
+          }
+
+          rupiah2 = split[1] !=undefined ? rupiah2 + ',' + split[1] :rupiah2;
+          return prefix == undefined ? rupiah :(rupiah2 ? 'Rp ' + rupiah2 :'');}
+  </script>
+
+  <script>
+      document.getElementById("form").addEventListener("submit", function (e) {
+      e.preventDefault(); // Prevent the default form submission
+      document.getElementById("message").textContent = "Sedang Diproses..";
+      document.getElementById("message").style.display = "block";
+      document.getElementById("submit-button").disabled = true;
+
+      // Collect the form data
+      var formData = new FormData(this);
+      var keyValuePairs = [];
+      for (var pair of formData.entries()) {
+      keyValuePairs.push(pair[0] + "=" + pair[1]);
+      }
+
+      var formDataString = keyValuePairs.join("&");
+
+      // Send a POST request to your Google Apps Script
+      fetch(
+      "https://script.google.com/macros/s/AKfycbw0Qh_suwk7fI_kd6xptQxD6EZazkxn7h6PMYMnJnZrGiJmvyfGAnUiseefbEtHhic/exec",
+      {
+          redirect: "follow",
+          method: "POST",
+          body: formDataString,
+          headers: {
+          "Content-Type": "text/plain;charset=utf-8",},
+      }
+      )
+      .then(function (response) {
+        // Check if the request was successful
+          if (response) {
+            return response; // Assuming your script returns JSON response
+          } else {
+            throw new Error("Proses Penginputan Gagal, Silahkan Ulangi.");
+          }
+      })
+      .then(function (data) {
+          // Display a success message
+          document.getElementById("message").textContent = "Proses Berhasil!";
+          document.getElementById("message").style.display = "block";
+          document.getElementById("message").style.backgroundColor = "blue";
+          document.getElementById("message").style.color = "beige";
+          document.getElementById("submit-button").disabled = false;
+          document.getElementById("form").reset();
+
+          setTimeout(function () {
+          document.getElementById("message").textContent = "";
+          document.getElementById("message").style.display = "none";}, 2600);
+      })
+      .catch(function (error) {
+          // Handle errors, you can display an error message here
+          console.error(error);
+          document.getElementById("message").textContent =
+          "An error occurred while submitting the form.";
+          document.getElementById("message").style.display = "block";});
+      });
+  </script>
+  </body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babe Maman - Simulasi Kredit</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  </head>
+
+  <body>
+    <div class="container">
+      <form id="form" class="container m-4 pl-4" method="POST">
+        <div class="signup-section">
+          <header>SIMULASI</header>
+          <div class="separator">
+              <div class="line"></div>
+          </div>
+          <div class="input-box">
+            <div class="input-field">
+              <input
+                class="input"
+                type="text"
+                placeholder="Nama Lengkap"
+                name="Nama Lengkap"
+                required
+              />
+              <i class='bx bxs-user'></i>
+            </div>
+          </div>
+          <div class="input-box">
+            <div class="input-field">
+              <input
+                class="input"
+                type="text"
+                placeholder="Instansi"
+                name="Instansi"
+                required
+              />
+              <i class='bx bxs-buildings'></i>
+            </div>
+          </div>
+          <div class="input-box">
+            <div class="input-field">
+              <input
+                class="input"
+                type="text"
+                placeholder="Nomor Handphone"
+                name="Nomor Handphone"
+                required
+              />
+              <i class='bx bxs-phone'></i>
+            </div>
+          </div>
+          <div class="input-box">
+            <div class="input-field">
+              <input
+                class="input"
+                type="date"
+                onfocus="(this.type='date')"
+                onblur="(this.type='text')" 
+                placeholder="Tanggal Lahir"
+                name="Tanggal Lahir"
+                required
+              />
+              <i class='bx bxs-calendar'></i>
+            </div>
+          </div>
+          <div class="input-box">
+            <div class="input-field">
+              <input
+                class="input"
+                type="text"
+                placeholder="Gaji Bersih"
+                name="Gaji"
+                id="rupiah"
+                max="9999999999999"
+                maxlength="13"
+                required
+              />
+              <i class='bx bxs-coin-stack'></i>
+            </div>
+          </div>
+
+          <h1></h1>
+          <h1>Data Pinjaman</h1>
+
+          <div class="input-box2">
+            <select id="pf" name="Plafond" class="input-currency">
+              <option value="" disabled selected hidden>Plafond Pinjaman</option>
+            </select>
+            <select id="jw" name="Jangka Waktu" class="input-jw">
+              <option value="" disabled selected hidden>Jangka Waktu</option>
+            </select>
+<!--
+            <div class="input-currency">
+              <input
+                class="input"
+                type="text"
+                placeholder="Jumlah Plafond"
+                name="Plafonds"
+                id="pfss"
+                max="99999999999999"
+                maxlength="14"
+                required
+              />
+              <i class='bx bxs-coin-stack'></i>
+            </div>
+            <div class="input-jw">
+              <input
+                class="input"
+                type="number"
+                placeholder="Jangka Waktu"
+                name="Jangka Waktus"
+                id="jwss"
+                max="180"
+                maxlength="3"
+                required
+              />
+              <i class='bx bxs-time'></i>
+            </div>
+-->
+          </div>
+
+          <div class="radio-group">
+            <label class="radio">
+              <input type="radio" name="Status Pinjaman" value="Baru" id="sts"/> Baru
+              <span></span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="Status Pinjaman" value="Top-Up" id="sts2"/> Top-Up
+              <span></span>
+            </label>
+          </div>
+
+          <button class="button" type="submit" id="submit-button">
+            Proses
+          </button>
+        </form>
+      <div>
+
+      <div class="login-section">
+        <header>Hasil</header>
+        <br>
+        <div class="separator">
+          <div class="line"></div>
+        </div>
+        <br>
+        <h3> </h3>
+        <div class="hasil">
+          <table class="hasil">
+            <tr>
+              <td>Plafond</td>
+              <td>=</td>
+              <td align="right" id="nom"></td>
+            </tr>
+            <tr>
+              <td>Jangka Waktu</td>
+              <td>=</td>
+              <td align="right"  id="jwz"></td>
+            </tr>
+            <tr>
+              <td>Bunga</td>
+              <td>=</td>
+              <td align="right"  id="bg"></td>
+            </tr>
+            <tr>
+              <td>Angsuran</td>
+              <td>=</td>
+              <td align="right"  id="ags"></td>
+            </tr>
+            <tr>
+              <td>Status Pinjaman</td>
+              <td>=</td>
+              <td align="right"  id="sts"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    <div>
+      
+    <div
+      id="message"
+      style="
+        display: none;
+        margin: 20px;
+        font-weight: bold;
+        color: blue;
+        padding: 8px;
+        background-color: beige;
+        border-radius: 4px;
+        border-color: aquamarine;
+      ">
+    </div>
+
+
+    <script>
+    // Fungsi untuk menghasilkan opsi-opsi kelipatan angka jutaan
+      function generateMillionOptions() {
+        var select = document.getElementById("pf");
+        var startValue = 1000000; // Nilai awal (1 juta)
+        var endValue = 500000000; // Nilai akhir (10 juta)
+        var increment = 1000000; // Increment (1 juta)
+
+        for (var i = startValue; i <= endValue; i += increment) {
+            var option = document.createElement("option");
+            option.value = i;
+            option.text = "Rp " + formatNumber(i);
+            select.appendChild(option);
+        }
+    }
+
+    // Fungsi untuk memformat angka dengan pemisah ribuan
+      function formatNumber(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Panggil fungsi untuk menghasilkan opsi-opsi
+    generateMillionOptions();
+
+    function generatejangkawaktu() {
+        var select = document.getElementById("jw");
+        var startValue = 1;
+        var endValue   = 180;
+        var increment  = 1; 
+
+        for (var i = startValue; i <= endValue; i += increment) {
+            var option = document.createElement("option");
+            option.value = i;
+            option.text = formatNumber(i) + " Bulan";
+            select.appendChild(option);
+        }
+    }
+
+    // Fungsi untuk memformat angka dengan pemisah ribuan
+      function formatNumber(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // Panggil fungsi untuk menghasilkan opsi-opsi
+    generatejangkawaktu();
+
+
+
+    </script>
+    
+    <!-- rumus anuitas ----------------------------------------------------------------------->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js'></script>
+    <script>
+    function cekParam(pf, jw){
+        if(Number.isNaN(pf) &&  Number.isNaN(jw)) 
+          return true
+        else
+          return false
+    }
+
+    function hitungAnu(pf, lama) {
+
+      var bb = (10.45/100)/12; 
+      var db = lama;
+      var pb = (1 + bb) ** db; 
+      var out = (pf) * ((bb * pb) / (pb - 1));
+      return Number(out.toFixed(2)).toLocaleString('id');
+    }
+
+    $("#submit-button").click(function(){
+        $("#nom").empty();
+        $("#jwz").empty();
+        $("#bg").empty();
+        $("#ags").empty();
+
+        var pfz = $("#pf").val();
+        var jwz = $("#jw").val();
+
+        console.log(pf);
+        $("#nom").append("Rp " + Number(pfz).toLocaleString('id'));
+        $("#jwz").append(Number(jwz) + " Bulan");
+        $("#bg").append("10.45%"); 
+        $("#ags").append("Rp " + hitungAnu(pfz, jwz));
+    });
+    </script>
+
+
+    <!-- currency ---------------------------------------------------------------------------->
+    <script type="text/javascript">
+      var rupiah =document.getElementById('rupiah');
+      rupiah.addEventListener('keyup', function(e){
+            rupiah.value = formatRupiah(this.value, 'Rp. ');
+        });
+      function formatRupiah(angka, prefix){
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split             = number_string.split(','),
+            sisa              = split[0].length % 3,
+            rupiah            = split[0].substr(0, sisa),
+            ribuan            = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if(ribuan){
+                separator = sisa ? '.' :'';
+                rupiah    += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] !=undefined ? rupiah + ',' + split[1] :rupiah;
+            return prefix == undefined ? rupiah :(rupiah ? 'Rp ' + rupiah :'');}
+    </script>
+    <script type="text/javascript">
+        var rupiah2 =document.getElementById('pfss');
+        rupiah2.addEventListener('keyup', function(e){
+            rupiah2.value = formatRupiah2(this.value, '');
+        });
+        function formatRupiah2(angka, prefix){
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+            split             = number_string.split(','),
+            sisa              = split[0].length % 3,
+            rupiah2           = split[0].substr(0, sisa),
+            ribuan            = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if(ribuan){
+                separator = sisa ? '.' :'';
+                rupiah2    += separator + ribuan.join('.');
+            }
+
+            rupiah2 = split[1] !=undefined ? rupiah2 + ',' + split[1] :rupiah2;
+            return prefix == undefined ? rupiah :(rupiah2 ? 'Rp ' + rupiah2 :'');}
+    </script>
+
+    <!-- posting ke database ----------------------------------------------------------------->
+    <script>
+        document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        document.getElementById("message").textContent = "Sedang Diproses..";
+        document.getElementById("message").style.display = "block";
+        document.getElementById("submit-button").disabled = true;
+
+        // Collect the form data
+        var formData = new FormData(this);
+        var keyValuePairs = [];
+        for (var pair of formData.entries()) {
+        keyValuePairs.push(pair[0] + "=" + pair[1]);
+        }
+
+        var formDataString = keyValuePairs.join("&");
+
+        // Send a POST request to your Google Apps Script
+        fetch(
+        "https://script.google.com/macros/s/AKfycbyHGoaOYn0kaTdYg1aAKNKHPimwvQvJaoogdx25hU3TVNuLQuOHwEidp_D65xBw6Dw/exec",
+        {
+            redirect: "follow",
+            method: "POST",
+            body: formDataString,
+            headers: {
+            "Content-Type": "text/plain;charset=utf-8",},
+        }
+        )
+        .then(function (response) {
+          // Check if the request was successful
+            if (response) {
+              return response; // Assuming your script returns JSON response
+            } else {
+              throw new Error("Proses Penginputan Gagal, Silahkan Ulangi.");
+            }
+        })
+        .then(function (data) {
+            // Display a success message
+            document.getElementById("message").textContent = "Proses Berhasil!";
+            document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.backgroundColor = "blue";
+            document.getElementById("message").style.color = "beige";
+            document.getElementById("submit-button").disabled = false;
+            document.getElementById("form").reset();
+
+            setTimeout(function () {
+            document.getElementById("message").textContent = "";
+            document.getElementById("message").style.display = "none";}, 2600);
+        })
+        .catch(function (error) {
+            // Handle errors, you can display an error message here
+            console.error(error);
+            document.getElementById("message").textContent =
+            "An error occurred while submitting the form.";
+            document.getElementById("message").style.display = "block";});
+        });
+
+    </script>
+
+    <!-- custom button ----------------------------------------------------------------------->
+    <script>  
+        document.querySelectorAll('input[type="number"]').forEach(input =>{
+          input.oninput = () =>{
+            if(input.value.length > input.maxLength) input.value = input.value.slice(0, input.maxLength);
+          };
+        });
+    </script>
+    <script>
+    const container = document.querySelector('.container');
+    const signupButton = document.querySelector('.signup-section header');
+    const loginButton = document.querySelector('.login-section header');
+
+    loginButton.addEventListener('click', () => {
+        container.classList.add('active');
+    });
+
+    signupButton.addEventListener('click', () => {
+        container.classList.remove('active');
+    });
+    </script>
+  </body>
+
+</html>

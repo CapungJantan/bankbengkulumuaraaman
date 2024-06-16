@@ -1,0 +1,320 @@
+*, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    height: 100vh;
+}
+.flex {
+	width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    background: #f0f0f0;
+    border-radius: 6px;
+    line-height: 45px;
+}
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+
+
+.container{
+    padding: 10px 30px 15px;
+    background:hsl(0, 0%, 100%);
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.container label {
+    display: inline-block;
+    margin: 10px 0 23px;
+}
+.container label input {
+    accent-color: white;
+    margin-right: 5px;
+}
+.container .halaman-hasil header {
+    opacity: 0;
+}
+.container .button {
+    width: 100%;
+    height: 45px;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 40px;
+    color: white;
+    font-weight: 600;
+    justify-content: center;
+}
+.container.active .halaman-hasil {
+    bottom: 0;
+    border-radius: 0px;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+}
+.container.active .halaman-hasil button {
+    display: none;
+}
+.container.active .halaman-hasil header{
+    opacity: 1;
+}
+.container.active .halaman-form1 header{
+    opacity: 0.5;
+}
+
+
+
+.separator{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.separator p{
+    color: #fff;
+}
+.separator .line{
+    width: 100%;
+    height: 1px;
+    background: #aaa;
+}
+
+
+/*HALAMAN 1 ---------------------------------------------------------------------------------------------*/
+.halaman-form1 header {
+    font-size: 30px;
+    text-align: center;
+    color: darkorange;
+    font-weight: bold;
+    cursor: pointer;
+}
+.halaman-form1 .other {
+    font-size: 0px;
+}
+.input-box .input-field {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 5px 0;
+}
+.input-box .input-field input {
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    color: black;
+    background: #f0f0f0;
+    border-radius: 6px;
+    padding: 15px 15px 15px 40px;
+}
+.input-box .input-field select {
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    font-size: 12px;
+    color: black;
+    background-color: #e2e2e2;
+    border-radius: 6px;
+    padding: 15px 15px 15px 15px;
+    appearance: none;
+}
+.input-box .input-field input::placeholder {
+    color: rgba(122, 122, 122, 0.5);
+    font-size: 12px;
+}
+.input-box .input-field i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.input-box .input-field .block {
+    background: #f0f0f0;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 6px;
+    padding: 0px 2px 0px 0px;
+}
+.input-box .input-field .block input {
+    height: 80%;
+    padding: 15px 15px 15px 15px;
+    background-color: #e2e2e2;
+    border: none;
+    text-align: center;
+}
+.input-box .input-field .block input::placeholder {
+    color: rgba(122, 122, 122, 0.5);
+    font-size: 10px;
+}
+.input-box .input-field .submit input {
+    padding: 15px 15px 15px 40px;
+    color: rgba(122, 122, 122, 0.5);
+}
+
+
+/*HALAMAN 2 ---------------------------------------------------------------------------------------------*/
+.halaman-form2 {
+    display: flex;
+    justify-content: left;
+}
+.halaman-form2 .input-label {
+    display: inline;
+    width: 70%;
+}
+.halaman-form2 .input-label .label-field {
+    background: white;
+    height: 50px;
+    margin-bottom: 5px;
+    border: 2px solid white;
+}
+.halaman-form2 .input-label label {
+    font-size: 12px;
+    padding: 6px;
+}
+.input-box2 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.input-box2 input {
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    font-size: 16px;
+    color: black;
+    background: #f0f0f0;
+    border-radius: 6px;
+    padding: 15px 15px 15px 40px;
+}
+.input-box2 select {
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    font-size: 12px;
+    color: black;
+    background: #f0f0f0;
+    border-radius: 6px;
+    appearance: none;
+    padding: 15px 15px 15px 15px;
+}
+.input-box2 i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.input-box2 input::placeholder {
+    color: rgba(122, 122, 122, 0.5);
+    font-size: 12px;
+}
+.input-box2 .input-currency {
+    position: relative;
+    height: 50px;
+}
+.input-box2 .input-jw {
+    position: relative;
+    height: 50px;
+}
+.radio-group {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 5px;
+}
+.radio {
+    position: relative;
+    width: 100%;
+}
+.radio input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+    opacity: 0;
+}
+.radio label {
+    color: black;
+    font-size: 9px;
+    transform: translate(0, 50%);
+}
+.radio .radio-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    transition: all 300ms ease;
+}
+input:hover + .radio-tile {
+    box-shadow: 0 0 12px var(orange);
+}
+input:checked + .radio-tile {
+    background-color: orange;
+    box-shadow: 0 0 12px var(orange);
+}
+input:checked + .radio-tile label {
+    color: white;
+}
+
+
+/* HALAMAN HASIL-----------------------------------------------------------------------------------------*/
+.halaman-hasil {
+    position: absolute;
+    left: 50%;
+    bottom: -88%;
+    transform: translateX(-50%);
+    width: calc(100% + 180px);
+    padding: 20px 120px;
+    background: rgba(0, 100, 0, 0.8);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    height: 100%;
+    border-radius: 220px;
+    transition: all 0.5s ease;
+}
+.halaman-hasil table {
+    width: 100%;
+}
+.halaman-hasil header {
+    font-size: 30px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.hasil {
+    background-color: white;
+    color: black;
+    font-size: 11px;
+    font-weight: 600;
+    padding-top: 10px;
+    line-height: 50px;
+    border-radius: 10px;
+    padding: 5%;
+}
+.hasil td {
+    border-bottom: 0.5px dashed gray;
+}
+
+
+@media (max-width: 355px) {
+.halaman-form2 .input-label label {
+  font-size: 12px;
+}}
